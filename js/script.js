@@ -7,7 +7,7 @@ window.fbAsyncInit = function () {//facebook init
 		
 //輸入基本的Facebook init的狀態，與Facebook 連接，包括APP ID的設定
 	FB.init({
-		appId      : '259527727586146',
+		appId      : '1421383364804383',
 		status     : true,
 		xfbml      : true,
 		version    : 'v2.0',
@@ -17,6 +17,8 @@ window.fbAsyncInit = function () {//facebook init
 	FB.getLoginStatus(function(response) {
 		if (response.status === 'connected') {
 			//呼叫api把圖片放到#preview IMG tag 內
+			var uid = response.authResponse.userID;
+            var accessToken = response.authResponse.accessToken;
 			FB.api(
 				"/me/picture",
 				{
