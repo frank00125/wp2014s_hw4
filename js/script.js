@@ -29,8 +29,8 @@ window.fbAsyncInit = function () {//facebook init
 						"width": "320"
 					}
 				},
-				function (response) {
-				  if (response && !response.error) {
+				function (res) {
+				  if (res && !res.error) {
 					/* handle the result */
 					$('img#preview').attr('src',response.data.url);
 				  }
