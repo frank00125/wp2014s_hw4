@@ -14,28 +14,13 @@ window.fbAsyncInit = function () {//facebook init
 	});
 
 
+	var uid;
+	var accessToken;
 	FB.getLoginStatus(function(response) {
 		if (response.status === 'connected') {
 			//呼叫api把圖片放到#preview IMG tag 內
-			var uid = response.authResponse.userID;
-            var accessToken = response.authResponse.accessToken;
-			FB.api(
-				"/me/picture",
-				{
-					"object": {
-						"redirect": false,
-						"height": "320",
-						"type": "normal",
-						"width": "320"
-					}
-				},
-				function (res) {
-				  if (res && !res.error) {
-					/* handle the result */
-					$('img#preview').attr('src',response.data.url);
-				  }
-				}
-			);
+			uid = response.authResponse.userID;
+            accessToken = response.authResponse.accessToken;
 		} 
 		else if (response.status === 'not_authorized') {
 			//要求使用者登入，索取publish_actions權限
