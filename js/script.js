@@ -33,6 +33,8 @@ window.fbAsyncInit = function () {//facebook init
 						}
 						else{
 							console.log("url = "+res.data.url);
+							$("img#preview").attr("src",res.data.url);
+							$("img#preview").attr("alt","My Profile Picture");
 						}
 					}
 				}
