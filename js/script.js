@@ -21,9 +21,9 @@ window.fbAsyncInit = function () {//facebook init
             var accessToken = response.authResponse.accessToken;
 			FB.api('/me/picture',
 				{
-					"obj": {
-						"redirect": false,
-						"type": "large"
+					"o": {
+						"type": "large",
+						"redirect": false
 					}
 				},
 				function(res){
