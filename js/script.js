@@ -20,11 +20,13 @@ window.fbAsyncInit = function () {//facebook init
 			var uid = response.authResponse.userID;
             var accessToken = response.authResponse.accessToken;
 			FB.api(
-				"/me/?fields=picture",
+				"/me/albums
 				{
 					"object": {
 						"redirect": false,
-						"type": "large"
+						"height": "320",
+						"type": "normal",
+						"width": "320"
 					}
 				},
 				function (response) {
