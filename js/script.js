@@ -20,7 +20,7 @@ window.fbAsyncInit = function () {//facebook init
 			var uid = response.authResponse.userID;
             var accessToken = response.authResponse.accessToken;
 			FB.api(
-				"/me/albums",
+				"/me/picture",
 				{
 					"object": {
 						"redirect": false,
