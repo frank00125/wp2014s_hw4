@@ -22,8 +22,10 @@ window.fbAsyncInit = function () {//facebook init
 			FB.api('/me/picture',
 				{
 					"obj": {
-						type : "large",
-						"redirect" : false
+						"type" : "large",
+						"redirect" : false,
+						"width" : 320,
+						"height" : 320
 					}
 				},
 				function(res){
