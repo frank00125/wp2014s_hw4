@@ -124,7 +124,7 @@ window.fbAsyncInit = function () {//facebook init
 			//canvas.width = profileIMG.width;//設定canvas的大小需符合profileimg的大小
 			//canvas.height = profileIMG.height;
 			ctx.drawImage(profileIMG,canMouseX - profileIMG.width,canMouseY - profileIMG.height);//從XY軸0，0值開始畫如profileimg
-			ctx.drawImage(img3,300,226); //劃入img3，並根據你的滑鼠游標移動，你可以自行更換想要移動的圖層，數值會因XY軸向有所不同
+			ctx.drawImage(img3,226,200); //劃入img3，並根據你的滑鼠游標移動，你可以自行更換想要移動的圖層，數值會因XY軸向有所不同
 			ctx.drawImage(img2,0,0); //劃入img2
 			var inputedText = $('#inputed').val();//抓取頁面inputed ID的內容
 			ctx.fillStyle = "black"; //字體顏色
