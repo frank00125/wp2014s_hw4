@@ -181,7 +181,7 @@ window.fbAsyncInit = function () {//facebook init
 function PostImageToFacebook(authToken) {
 	$('.info').append('<img src="img/loading.gif"/>')//載入loading的img
     var canvas = document.getElementById("canvas");//找canvas
-    var imageData = canvas.toDataURL("image/png");//把canvas轉換PNG
+    var imageData = canvas.toDataURL("image/jpeg");//把canvas轉換PNG
     try {
         blob = dataURItoBlob(imageData);//把影像載入轉換函數
     } catch (e) {
