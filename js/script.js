@@ -104,11 +104,7 @@ window.fbAsyncInit = function () {//facebook init
 			ctx.drawImage(profileIMG,canMouseX,canMouseY);//從XY軸0，0值開始畫如profileimg
 			isDrawed = true;
 		}
-		else{
-			$("preview").css("position","relative");
-			$("preview").css("top","relative");
-			$("preview").css("left","relative");
-		}
+		
 		// set the drag flag
 		isDragging=true;//宣告拖拉變數
     }
@@ -135,7 +131,11 @@ window.fbAsyncInit = function () {//facebook init
 			ctx.clearRect(0,0,canvasWidth,canvasHeight); //移除canvas起始的內容
 			ctx.drawImage(img3,171,400); //劃入img3，並根據你的滑鼠游標移動，你可以自行更換想要移動的圖層，數值會因XY軸向有所不同
 			ctx.drawImage(img2,0,0); //劃入img2
-			if(isDraw)
+			if(isDrawed){
+			$("preview").css("position","relative");
+			$("preview").css("top","relative");
+			$("preview").css("left","relative");
+		}
 			var inputedText = $('#inputed').val();//抓取頁面inputed ID的內容
 			ctx.fillStyle = "black"; //字體顏色
 			ctx.font='20px "微軟正黑體"'; //字體大小和字形
