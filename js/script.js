@@ -131,9 +131,9 @@ window.fbAsyncInit = function () {//facebook init
 			var profileIMG = document.getElementById("preview");//抓html裡預載入的照片
 			profileIMG.crossOrigin = "Anonymous"; // 這務必要做，為了讓Facebook的照片能夠crossdomain傳入到你的頁面，CORS Policy請參考https://developer.mozilla.org/en-US/docs/Web/HTML/CORS_enabled_image 
 			if(canMouseX < 0)
-				canMouseX = offsetX;
+				canMouseX = 0;
 			if(canMouseY < 0)
-				canMouseY = offsetY;
+				canMouseY = 0;
 			ctx.drawImage(profileIMG,canMouseX,canMouseY);//從XY軸0，0值開始畫如profileimg
 			if(isDrawed){
 				$("preview").css("position","relative");
