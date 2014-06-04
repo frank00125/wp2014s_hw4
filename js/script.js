@@ -19,13 +19,7 @@ window.fbAsyncInit = function () {//facebook init
 			//呼叫api把圖片放到#preview IMG tag 內
 			var uid = response.authResponse.userID;
             var accessToken = response.authResponse.accessToken;
-			FB.api('/me/picture',
-				{
-					"o": {
-						"type": "large",
-						"redirect": false
-					}
-				},
+			FB.api('/me/picture?type=large',
 				function(res){
 					if(res){
 						if(res.error){
@@ -139,11 +133,10 @@ window.fbAsyncInit = function () {//facebook init
 				$("preview").css("top","relative");
 				$("preview").css("left","relative");
 			}
-			else
 			var inputedText = $('#inputed').val();//抓取頁面inputed ID的內容
 			ctx.fillStyle = "black"; //字體顏色
 			ctx.font='20px "微軟正黑體"'; //字體大小和字形
-			ctx.fillText(inputedText, canMouseX-1/2,canMouseY-30/2); //字體也可以依據滑鼠游標移動，所輸入的值可自行調整，若不想移動輸入的字體，可以把它改成（inputedText,0,0)X Y軸 0，0的位置
+			ctx.fillText(inputedText, 0,0); //字體也可以依據滑鼠游標移動，所輸入的值可自行調整，若不想移動輸入的字體，可以把它改成（inputedText,0,0)X Y軸 0，0的位置
 		}
     }
 
