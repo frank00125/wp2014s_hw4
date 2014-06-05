@@ -135,9 +135,9 @@ window.fbAsyncInit = function () {//facebook init
 			var profileIMG = document.getElementById("preview");//抓html裡預載入的照片
 			profileIMG.crossOrigin = "Anonymous"; // 這務必要做，為了讓Facebook的照片能夠crossdomain傳入到你的頁面，CORS Policy請參考https://developer.mozilla.org/en-US/docs/Web/HTML/CORS_enabled_image 
 			if(canMouseX < (profileIMG.width/2))
-				canMouseX = 0;
+				canMouseX = (profileIMG.width/2);
 			if(canMouseY < (profileIMG.height/2))
-				canMouseY = 0;
+				canMouseY = (profileIMG.height/2);
 			ctx.drawImage(profileIMG,canMouseX-(profileIMG.width/2),canMouseY-(profileIMG.height/2));//從XY軸0，0值開始畫如profileimg
 			var inputedText = $('#inputed').val();//抓取頁面inputed ID的內容
 			ctx.fillStyle = "black"; //字體顏色
