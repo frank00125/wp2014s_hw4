@@ -138,12 +138,7 @@ window.fbAsyncInit = function () {//facebook init
 				canMouseX = 0;
 			if(canMouseY < 0)
 				canMouseY = 0;
-			ctx.drawImage(profileIMG,canMouseX,canMouseY);//從XY軸0，0值開始畫如profileimg
-			if(isDrawed){
-				$("preview").css("position","relative");
-				$("preview").css("top","relative");
-				$("preview").css("left","relative");
-			}
+			ctx.drawImage(profileIMG,canMouseX-(profileIMG.width/2),canMouseY-(profileIMG.height/2));//從XY軸0，0值開始畫如profileimg
 			var inputedText = $('#inputed').val();//抓取頁面inputed ID的內容
 			ctx.fillStyle = "black"; //字體顏色
 			ctx.font='20px "微軟正黑體"'; //字體大小和字形
@@ -181,7 +176,7 @@ window.fbAsyncInit = function () {//facebook init
 function PostImageToFacebook(authToken) {
 	$('.info').append('<img src="img/loading.gif"/>')//載入loading的img
     var canvas = document.getElementById("canvas");//找canvas
-    var imageData = canvas.toDataURL("image/jpeg");//把canvas轉換PNG
+    var imageData = canvas.toDataURL("image/png");//把canvas轉換PNG
     try {
         blob = dataURItoBlob(imageData);//把影像載入轉換函數
     } catch (e) {
