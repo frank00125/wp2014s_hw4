@@ -4,7 +4,11 @@
 */
 var inputed = "";
 var hasNewInput = false;
-
+$('textarea#inputed').keyup(function (){
+	inputed = $('textarea#inputed').val();
+	hasNewInput = true;
+	console.log(inputed);
+});
 window.fbAsyncInit = function () {//facebook init
 		
 //輸入基本的Facebook init的狀態，與Facebook 連接，包括APP ID的設定
@@ -62,11 +66,6 @@ window.fbAsyncInit = function () {//facebook init
 		}
 	});
 
-	$('textarea#inputed').keyup(function (){
-		inputed = $('textarea#inputed').val();
-		hasNewInput = true;
-		console.log(inputed);
-	});
 //以下為canvas的程式碼，基本上不需多動，依據comments修改即可
 	
 	//起始畫面
@@ -105,10 +104,9 @@ window.fbAsyncInit = function () {//facebook init
 			var profileIMG = document.getElementById("preview");//抓html裡預載入的照片
 			profileIMG.crossOrigin = "Anonymous"; // 這務必要做，為了讓Facebook的照片能夠crossdomain傳入到你的頁面，CORS Policy請參考https://developer.mozilla.org/en-US/docs/Web/HTML/CORS_enabled_image 
 			ctx.drawImage(profileIMG,canMouseX,canMouseY);//從XY軸0，0值開始畫如profileimg
-			var inputedText = $('#inputed').val();//抓取頁面inputed ID的內容
 			ctx.fillStyle = "black"; //字體顏色
 			ctx.font='20px "微軟正黑體"'; //字體大小和字形
-			ctx.fillText(inputedText, 150, 405); //字體也可以依據滑鼠游標移動，所輸入的值可自行調整，若不想移動輸入的字體，可以把它改成（inputedText,0,0)X Y軸 0，0的位置
+			ctx.fillText(inputed, 150, 405); //字體也可以依據滑鼠游標移動，所輸入的值可自行調整，若不想移動輸入的字體，可以把它改成（inputedText,0,0)X Y軸 0，0的位置
 			isDrawed = true;
 		}
 		
