@@ -4,13 +4,13 @@
 */
 var inputed = "";
 var hasNewInput = false;
-$('textarea#inputed').keyup(function (){
-	inputed = $('textarea#inputed').val();
-	hasNewInput = true;
-	console.log(inputed);
-});
+
 window.fbAsyncInit = function () {//facebook init
-		
+	$('textarea#inputed').keyup(function (){
+		inputed = $('textarea#inputed').val();
+		hasNewInput = true;
+		console.log(inputed);
+	});	
 //輸入基本的Facebook init的狀態，與Facebook 連接，包括APP ID的設定
 	FB.init({
 		appId      : '1421383364804383',
