@@ -4,11 +4,6 @@
 */
 var inputed = "";
 var hasNewInput = false;
-$('textarea#inputed').keyup(function (){
-	inputed = $('textarea#inputed').val();
-	hasNewInput = true;
-	console.log(inputed);
-});
 
 window.fbAsyncInit = function () {//facebook init
 		
@@ -67,7 +62,11 @@ window.fbAsyncInit = function () {//facebook init
 		}
 	});
 
-
+	$('textarea#inputed').keyup(function (){
+		inputed = $('textarea#inputed').val();
+		hasNewInput = true;
+		console.log(inputed);
+	});
 //以下為canvas的程式碼，基本上不需多動，依據comments修改即可
 	
 	//起始畫面
