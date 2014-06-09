@@ -147,10 +147,9 @@ window.fbAsyncInit = function () {//facebook init
 				canMouseY = (profileIMG.height/2);
 			ctx.drawImage(profileIMG,canMouseX-(profileIMG.width/2),canMouseY-(profileIMG.height/2));//從XY軸0，0值開始畫如profileimg
 			//var inputedText = $('#inputed').val();//抓取頁面inputed ID的內容
-			if(hasNewInput){
-				ctx.fillStyle = "black"; //字體顏色
-				ctx.font='20px "微軟正黑體"'; //字體大小和字形
-				ctx.fillText(inputedText, 150, 405); //字體也可以依據滑鼠游標移動，所輸入的值可自行調整，若不想移動輸入的字體，可以把它改成（inputedText,0,0)X Y軸 0，0的位置
+			ctx.fillStyle = "black"; //字體顏色
+			ctx.font='20px "微軟正黑體"'; //字體大小和字形
+			ctx.fillText(inputed, 150, 405); //字體也可以依據滑鼠游標移動，所輸入的值可自行調整，若不想移動輸入的字體，可以把它改成（inputedText,0,0)X Y軸 0，0的位置
 			}	
 		}
     }
