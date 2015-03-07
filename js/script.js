@@ -46,6 +46,8 @@ document.ready = function () {//facebook init
 			var canvasTop = canvas.top;
 		
 			var profileIMG = document.getElementById("preview");//抓html裡預載入的照片
+			profileIMG.width = canvasWidth;
+			profileIMG.width = canvasHeight;
 			ctx.clearRect(0,0,canvasWidth,canvasHeight);
 			console.log(profileIMG);
 			console.log(ctx);
