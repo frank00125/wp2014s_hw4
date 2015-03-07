@@ -4,67 +4,35 @@
 */
 var inputed = "";
 var hasNewInput = false;
+var isCaptured = false;
 
-window.fbAsyncInit = function () {//facebook init
-	$('textarea#inputed').keyup(function (){
-		inputed = $('textarea#inputed').val();
-		hasNewInput = true;
-		console.log(inputed);
-	});	
-//輸入基本的Facebook init的狀態，與Facebook 連接，包括APP ID的設定
-	FB.init({
-		appId      : '1421383364804383',
-		status     : true,
-		xfbml      : true,
-		version    : 'v2.0',
-	});
-
-
-	FB.getLoginStatus(function(response) {
-		if (response.status === 'connected') {
-			//呼叫api把圖片放到#preview IMG tag 內
-			var uid = response.authResponse.userID;
-            var accessToken = response.authResponse.accessToken;
-			FB.api('/me/picture?type=large',
-				function(res){
-					if(res){
-						if(res.error){
-							console.log(res.error.type+" : "+res.error.message);
-						}
-						else{
-							console.log("url = "+res.data.url);
-							$("img#preview").attr("src",res.data.url);
-							$("img#preview").attr("alt","My Profile Picture");
-						}
-					}
+(function () {//facebook init
+	var takePic = document.getElementById('camera');
+	takePic.onchange = function (event){
+		var files = event.target.files, file;
+		if(files && files.length > 0){
+			file = files[0];
+			try{
+				var URL = window.URL || window.webkitURL;
+				var imgURL = URL.createObjectURL(file);
+				var imgObj = document.getElementById('preview');
+				imgObj.src = imgURL;
+				URL.revokeObjectURL(imgURL);
+			}
+			catch(e){
+				try{
+					var fileReader = new FileReader();
+					fileReader.onload = function(event){
+						var imgObj = document.getElementById('preview');
+						imgObj = event.target.result;
+					};
 				}
-			);			
-		} 
-		else if (response.status === 'not_authorized') {
-			//要求使用者登入，索取publish_actions權限
-			FB.login(function(response) {
-				// handle the response
-					console.log("name = "+response.name+" and id = "+response.id);
-				}, 
-				{
-					scope: 'publish_actions', 
-					return_scopes: true
+				catch(e){
+					alert('capturing face failed');
 				}
-			);
-		} 
-		else {
-			//同樣要求使用者登入
-			FB.login(function(response) {
-				// handle the response
-					console.log("name = "+response.name+" and id = "+response.id);
-				},
-				{
-					scope: 'publish_actions', 
-					return_scopes: true
-				}
-			);
-		}
-	});
+			}
+		}	
+	}
 
 //以下為canvas的程式碼，基本上不需多動，依據comments修改即可
 	
@@ -95,12 +63,9 @@ window.fbAsyncInit = function () {//facebook init
 	var isDrawed = false;
 
     function handleMouseDown(e){//滑鼠按下的函數
-		canMouseX = parseInt(e.clientX-offsetX);//抓滑鼠游標X
-		canMouseY = parseInt(e.clientY-offsetY);//抓滑鼠游標y
 		if(!isDrawed){
 			ctx.clearRect(0,0,canvasWidth,canvasHeight); //移除canvas起始的內容
-			ctx.drawImage(img3,171,400); //劃入img3，並根據你的滑鼠游標移動，你可以自行更換想要移動的圖層，數值會因XY軸向有所不同
-			ctx.drawImage(img2,0,0); //劃入img2
+			ctx.drawImage(img2,0,0); //劃入i:mg2
 			var profileIMG = document.getElementById("preview");//抓html裡預載入的照片
 			profileIMG.crossOrigin = "Anonymous"; // 這務必要做，為了讓Facebook的照片能夠crossdomain傳入到你的頁面，CORS Policy請參考https://developer.mozilla.org/en-US/docs/Web/HTML/CORS_enabled_image 
 			ctx.drawImage(profileIMG,canMouseX,canMouseY);//從XY軸0，0值開始畫如profileimg
@@ -109,72 +74,8 @@ window.fbAsyncInit = function () {//facebook init
 			ctx.fillText(inputed, 275, 450); //字體也可以依據滑鼠游標移動，所輸入的值可自行調整，若不想移動輸入的字體，可以把它改成（inputedText,0,0)X Y軸 0，0的位置
 			isDrawed = true;
 		}
-		
-		// set the drag flag
-		isDragging=true;//宣告拖拉變數
-    }
-
-    function handleMouseUp(e){//滑鼠放掉的函數
-		canMouseX = parseInt(e.clientX-offsetX);
-		canMouseY = parseInt(e.clientY-offsetY);
-		// clear the drag flag
-		isDragging = false;
-    }
-
-    function handleMouseOut(e){//滑鼠移開的函數
-		canMouseX = parseInt(e.clientX-offsetX);
-		canMouseY = parseInt(e.clientY-offsetY);
-		// user has left the canvas, so clear the drag flag
-		//isDragging=false;
-    }
-
-    function handleMouseMove(e){//滑鼠移動的event
-		canMouseX = parseInt(e.clientX-offsetX);
-		canMouseY = parseInt(e.clientY-offsetY);
-		// if the drag flag is set, clear the canvas and draw the image
-		if(isDragging){ //當拖拉為True時
-			ctx.clearRect(0,0,canvasWidth,canvasHeight); //移除canvas起始的內容
-			ctx.drawImage(img3,171,400); //劃入img3，並根據你的滑鼠游標移動，你可以自行更換想要移動的圖層，數值會因XY軸向有所不同
-			ctx.drawImage(img2,0,0); //劃入img2
-			var profileIMG = document.getElementById("preview");//抓html裡預載入的照片
-			profileIMG.crossOrigin = "Anonymous"; // 這務必要做，為了讓Facebook的照片能夠crossdomain傳入到你的頁面，CORS Policy請參考https://developer.mozilla.org/en-US/docs/Web/HTML/CORS_enabled_image 
-			if(canMouseX < (profileIMG.width/2))
-				canMouseX = (profileIMG.width/2);
-			if(canMouseY < (profileIMG.height/2))
-				canMouseY = (profileIMG.height/2);
-			ctx.drawImage(profileIMG,canMouseX-(profileIMG.width/2),canMouseY-(profileIMG.height/2));//從XY軸0，0值開始畫如profileimg
-			//var inputedText = $('#inputed').val();//抓取頁面inputed ID的內容
-			ctx.fillStyle = "black"; //字體顏色
-			ctx.font='20px "微軟正黑體"'; //字體大小和字形
-			ctx.fillText(inputed, 275, 450); //字體也可以依據滑鼠游標移動，所輸入的值可自行調整，若不想移動輸入的字體，可以把它改成（inputedText,0,0)X Y軸 0，0的位置	
-		}
-    }
-
-	//抓取滑鼠移動的event
-    $("#canvas").mousedown(function(e){handleMouseDown(e);});
-    $("#canvas").mousemove(function(e){handleMouseMove(e);});
-    $("#canvas").mouseup(function(e){handleMouseUp(e);});
-    $("#canvas").mouseout(function(e){handleMouseOut(e);});
-
-
-//可以思考這程式要放在init內還是init外?
-
-
-
-
-}; //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<init end
-
-//LOAD FACEBOOK SDK ASYNC，這是基本的東西，應該不用多說了吧
-(function (d, s, id) {
-    var js, fjs = d.getElementsByTagName(s)[0];
-    if (d.getElementById(id)) {
-        return;
-    }
-    js = d.createElement(s);
-    js.id = id;
-    js.src = "//connect.facebook.net/en_US/sdk.js"; 
-    fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));
+	}
+})(); //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<init end
 
 // Post a BASE64 Encoded PNG Image to facebook，以下程式為把照片po到facebook的方法，基本上這樣就可以不用動了，但思考authToken該怎麼拿到，因為這裡我並沒有把使用者登入的token載入到這函數內，所以它是不會得到token的
 function PostImageToFacebook(authToken) {
