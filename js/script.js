@@ -20,6 +20,7 @@ var isCaptured = false;
 				URL.revokeObjectURL(imgURL);
 			}
 			catch(e){
+				console.log('try another way');
 				try{
 					var fileReader = new FileReader();
 					fileReader.onload = function(event){
