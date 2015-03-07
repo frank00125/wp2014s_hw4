@@ -18,6 +18,7 @@ var isCaptured = false;
 				var imgObj = document.getElementById('preview');
 				imgObj.src = imgURL;
 				URL.revokeObjectURL(imgURL);
+				drawCanvas();
 			}
 			catch(e){
 				console.log('try another way');
@@ -27,6 +28,7 @@ var isCaptured = false;
 						var imgObj = document.getElementById('preview');
 						imgObj = event.target.result;
 					};
+					drawCanvas();
 				}
 				catch(e){
 					alert('capturing face failed');
@@ -34,49 +36,20 @@ var isCaptured = false;
 			}
 		}	
 	}
-
+})();
 //以下為canvas的程式碼，基本上不需多動，依據comments修改即可
-	
-	//起始畫面
-	var ctx = document.getElementById('canvas').getContext('2d'); //宣告變數找到頁面的canvas標籤的2d內容
-	ctx.font = '20px "Arial"'; //設定字體與大小
-	ctx.fillText("Click here to start fill with Facebook Profile Picture", 40, 270); //設定預設的開始畫面
-    var img = new Image(); // 新增圖像1
-    img.src = "img/overlay.png"; //圖像路徑（路徑自己設，且自己加入想要的圖層）
-	img.crossOrigin = "Anonymous";
-	var img2 = new Image(); //新增圖像2
-	img2.src = "img/overlayback.png" //圖像路徑
-	img2.crossOrigin = "Anonymous";
-	var img3 = new Image();//新增圖像3
-	img3.src = "img/typography.png"//圖像路徑
-	img3.crossOrigin = "Anonymous";
-	
+	function drawCanvas(){
+		//宣告基本變數
+		var canvas = document.getElementById("canvas"); //宣告變數找到canvas標籤
+	    var ctx = canvas.getContext("2d"); //找到2d內容
+	    var canvasWidth = canvas.width;//大小
+	    var canvasHeight = canvas.height;//高度
 
-	//宣告基本變數
-    var canvas = document.getElementById("canvas"); //宣告變數找到canvas標籤
-    var ctx = canvas.getContext("2d"); //找到2d內容
-    var canvasOffset = $("#canvas").offset();//找到offset
-    var offsetX = canvasOffset.left;//左方
-    var offsetY = canvasOffset.top;//上方
-    var canvasWidth = canvas.width;//大小
-    var canvasHeight = canvas.height;//高度
-    var isDragging = false;//拖拉
-	var isDrawed = false;
-
-    function handleMouseDown(e){//滑鼠按下的函數
-		if(!isDrawed){
-			ctx.clearRect(0,0,canvasWidth,canvasHeight); //移除canvas起始的內容
-			ctx.drawImage(img2,0,0); //劃入i:mg2
-			var profileIMG = document.getElementById("preview");//抓html裡預載入的照片
-			profileIMG.crossOrigin = "Anonymous"; // 這務必要做，為了讓Facebook的照片能夠crossdomain傳入到你的頁面，CORS Policy請參考https://developer.mozilla.org/en-US/docs/Web/HTML/CORS_enabled_image 
-			ctx.drawImage(profileIMG,canMouseX,canMouseY);//從XY軸0，0值開始畫如profileimg
-			ctx.fillStyle = "black"; //字體顏色
-			ctx.font='20px "微軟正黑體"'; //字體大小和字形
-			ctx.fillText(inputed, 275, 450); //字體也可以依據滑鼠游標移動，所輸入的值可自行調整，若不想移動輸入的字體，可以把它改成（inputedText,0,0)X Y軸 0，0的位置
-			isDrawed = true;
-		}
-	}
-})(); //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<init end
+		var profileIMG = document.getElementById("preview");//抓html裡預載入的照片
+		console.log(profileIMG);
+		ctx.drawImage(profileIMG, 0, 0);//從XY軸0，0值開始畫如profileimg
+		var s = 0;
+	} //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<init end
 
 // Post a BASE64 Encoded PNG Image to facebook，以下程式為把照片po到facebook的方法，基本上這樣就可以不用動了，但思考authToken該怎麼拿到，因為這裡我並沒有把使用者登入的token載入到這函數內，所以它是不會得到token的
 function PostImageToFacebook(authToken) {
