@@ -115,8 +115,6 @@ document.ready = function () {//facebook init
 		var url = canvas.toDataURL('image/jpeg');
 		var link = document.getElementById("download");
 		link.innerHTML = "download";
-		link.addEventListener('click', function(){
-			this.href = url;
-		},false);
+		link.href = url;
 	};
 };
